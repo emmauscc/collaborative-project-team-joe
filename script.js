@@ -18,8 +18,8 @@ $(document).ready(function(){
     let row8=[];
     
     let board = [row1, row2, row3, row4, row5, row6, row7, row8];
-    let whitePieces = [wRook1, wKnight1, wBishop1, wKing, wQueen, wBishop2, wKnight2, wRook2, wPawn1, wPawn2, wPawn3, wPawn4, wPawn5, wPawn6, wPawn7, wPawn8];
-    let blackPieces = [bRook1, bKnight1, bBishop1, bKing, bQueen, bBishop2, bKnight2, bRook2, bPawn1, bPawn2, bPawn3, bPawn4, bPawn5, bPawn6, bPawn7, bPawn8];
+    let whitePieces = ['wRook1', 'wKnight1', 'wBishop1', 'wKing', 'wQueen', 'wBishop2', 'wKnight2', 'wRook2', 'wPawn1', 'wPawn2', 'wPawn3', 'wPawn4', 'wPawn5', 'wPawn6', 'wPawn7', 'wPawn8'];
+    let blackPieces = ['bRook1', 'bKnight1', 'bBishop1', 'bKing', 'bQueen', 'bBishop2', 'bKnight2', 'bRook2', 'bPawn1', 'bPawn2', 'bPawn3', 'bPawn4', 'bPawn5', 'bPawn6', 'bPawn7', 'bPawn8'];
 
 
     for(i=0; i<board.length; i++){
@@ -36,6 +36,6 @@ $(document).ready(function(){
     }
 
     console.log(board);
-    initialiseBoard()
+    //initialiseBoard()
 
 });
