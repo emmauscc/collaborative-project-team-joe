@@ -1,0 +1,127 @@
+body{
+    background-color:#f7f0e0;
+}
+
+#p1{
+    color: #816353;
+}
+
+#p2{
+    color: #719972;
+}
+
+#left{
+    float: left;
+}
+
+#right{
+    float: right;
+}
+
+.container{
+    height: 1020px;
+    width: 1840px;
+    background-color: black;
+    float: left;
+    font-family: "Monaco", monospace;
+    text-align: center;
+
+}
+
+.title{
+    height: 200px;
+    width: 1840px;
+    color: #f7f0e0;
+    background-color:#523e32;
+    float: left;
+    font-family: "Monaco", monospace;
+    text-align: center;
+    font-size: 160px;
+
+}
+
+.banner{
+    height: 20px;
+    width: 1840px;
+    background-color: #f7f0e0;
+    float: left;
+    font-family: "Monaco", monospace;
+    text-align: center;
+    font-size: 160px;
+
+}
+
+.bottomBox{
+    height: 400px;
+    width: 500px;
+    background-color: red;
+    font-family: "Monaco", monospace;
+    text-align: center;
+    
+}
+
+.topBox{
+    height: 400px;
+    width: 500px;
+    background-color: yellow;
+    font-family: "Monaco", monospace;
+    text-align: center;
+    
+}
+
+.sideBox{
+    height: 800px;
+    width: 520px;
+    background-color: #f7f0e0;
+    float: left;
+    font-family: "Monaco", monospace;
+    text-align: center;
+}
+
+.subtitle{
+    height: 100px;
+    width: 500px;
+    background-color: #f7f0e0;
+    float: left;
+    font-family: "Monaco", monospace;
+    text-align: center;
+    font-size: 70px;
+}
+
+.timer{
+    height: 150px;
+    width: 500px;
+    background-color: lightgreen;
+    float: left;
+    font-family: "Monaco", monospace;
+    text-align: center;
+    font-size: 70px;
+}
+
+.board{
+    height: 800px;
+    width: 800px;
+    background-color:#f7f0e0;
+    float: left;
+    font-family: "Monaco", monospace;
+    text-align: center;
+    
+}
+
+.squareWhite{
+    height: 100px;
+    width: 100px;
+    float: left;
+    font-family: "Monaco", monospace;
+    text-align: center;
+    background-color: #f7f0e0;
+}
+
+.squareBrown{
+    height: 100px;
+    width: 100px;
+    float: left;
+    font-family: "Monaco", monospace;
+    text-align: center;
+    background-color: #523e32;
+}
