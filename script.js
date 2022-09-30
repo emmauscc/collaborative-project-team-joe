@@ -27,16 +27,18 @@ $(document).ready(function(){
         for(j=0; j<8; j++){
             if((i%2==0) == (j%2==1)){
                 colour = "black";
-                $('.board').append("<div id='"+i+j+"' class='squareBrown'></div>");
+                $('.board').append("<div id='"+(i+1)+(j+1)+"' class='squareBrown'></div>");
                 console.log('IT WORKED!!!');
             }else{
                 colour = "white";
-                $('.board').append("<div id='"+i+j+"' class='squareWhite'></div>");
+                $('.board').append("<div id='"+(i+1)+(j+1)+"' class='squareWhite'></div>");
                 console.log('IT WORKED!!!');
             }
             row.push(new square(j, piece, colour));
         }
     }
+
+    $('#11').append("<div class='pieceBrown'> PIECE</div>");
 
     console.log(board);
     //initialiseBoard()

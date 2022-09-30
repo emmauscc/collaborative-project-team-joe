@@ -125,3 +125,14 @@ body{
     text-align: center;
     background-color: #523e32;
 }
+
+.pieceBrown{
+    height: 80px;
+    width: 80px;
+    float: left;
+    font-family: "Monaco", monospace;
+    text-align: center;
+    background-color: yellow;
+}
+
+
