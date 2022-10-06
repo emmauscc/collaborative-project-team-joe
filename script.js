@@ -43,4 +43,13 @@ $(document).ready(function(){
     console.log(board);
     //initialiseBoard()
 
+
+    $('.squareBrown, .squareWhite').click(function piece(){
+        let id = $(this).attr('id');
+        let row = id.charAt(0);
+        let column = id.charAt(1);
+        //let piece = board[row][column][piece];
+        console.log("row: "+row+"; column: "+column);
+    });
+
 });
