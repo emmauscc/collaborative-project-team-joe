@@ -46,11 +46,11 @@ $(document).ready(function(){
     });
 
     let pieces = [rook, knight, bishop, king, queen, pawn];
-    let rook = [until(up()), until(down()), until(left()), unti(right())];
+    let rook = [until(up), until(down), until(left), unti(right)];
     let knight = [up2Left(), up2Right(), down2Left(), down2Right(), left2Up(), left2Down(), right2Up(), right2Down()];
-    let bishop = [until(upRight()), until(upLeft()), until(downRight), until(downLeft())];
+    let bishop = [until(upRight), until(upLeft), until(downRight), until(downLeft)];
     let king = [up(), down(), left(), right()];
-    let queen = [until(up()), until(down()), until(left()), until(right()), until(upLeft()), until(upRight()), until(downLeft()), until(downRight())];
+    let queen = [until(up), until(down), until(left), until(right), until(upLeft), until(upRight), until(downLeft), until(downRight)];
     let pawn = [up()];
 
     function until(move) {
