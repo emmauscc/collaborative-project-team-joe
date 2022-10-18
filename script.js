@@ -1,4 +1,6 @@
 $(document).ready(function(){
+    let row;
+    let column;
 
     class square{
         constructor(number, piece) {
@@ -12,8 +14,8 @@ $(document).ready(function(){
           this.playerNo = playerNo;
           this.type = type;
           this.number = number;
-        }
-    }      
+        }       
+    }
 
     let row1=[null];
     let row2=[null];
@@ -104,5 +106,245 @@ $(document).ready(function(){
     displayPieces();
 
     //initialiseBoard()
+    console.log(board);
 
+    $('.squareBrown, .squareWhite').click(function piece(){
+        let id = $(this).attr('id');
+        row = id.charAt(0);
+        column = id.charAt(1);
+        //let piece = board[row][column][piece];
+        console.log("row: "+row+"; column: "+column);
+    });
+
+    let pieces = [rook, knight, bishop, king, queen, pawn];
+    let rook = [until(up), until(down), until(left), unti(right)];
+    let knight = [up2Left(), up2Right(), down2Left(), down2Right(), left2Up(), left2Down(), right2Up(), right2Down()];
+    let bishop = [until(upRight), until(upLeft), until(downRight), until(downLeft)];
+    let king = [up(), down(), left(), right()];
+    let queen = [until(up), until(down), until(left), until(right), until(upLeft), until(upRight), until(downLeft), until(downRight)];
+    let pawn = [up()];
+
+    function until(move) {
+        occupied = false;
+        while(occupied == false){
+            move();  // not sure if this will work but we'll see when i can test it :)
+        }
+    }
+
+    function up(){                  // note to self, update these so they check if the edge of the board is there 
+        occupied = false;
+        if(board[row][column][colour] = "white"){
+            row = row+1;
+        }else if(board[row][column][colour] = "brown"){
+            row = row-1;
+        }
+        if(board[row][column][piece] != null){
+            $('#'+row+column+'').css("background-color", "yellow");
+        }else{}; 
+    }
+   
+    function down(){
+        occupied = false;
+        if(board[row][column][colour] = "white"){
+            row = row-1;
+        }else if(board[row][column][colour] = "brown"){
+            row = row+1;
+        }
+        if(board[row][column][piece] != null){
+            $('#'+row+column+'').css("background-color", "yellow");
+        }else{}; 
+    }
+
+    function left(){
+        occupied = false;
+        if(board[row][column][colour] = "white"){
+            column = column-1;
+        }else if(board[row][column][colour] = "brown"){
+            column = column+1;
+        }
+        if(board[row][column][piece] != null){
+            $('#'+row+column+'').css("background-color", "yellow");
+        }else{}; 
+    }
+
+    function right(){
+        occupied = false;
+        if(board[row][column][colour] = "white"){
+            column = column+1;
+        }else if(board[row][column][colour] = "brown"){
+            column = column-1;
+        }
+        if(board[row][column][piece] != null){
+            $('#'+row+column+'').css("background-color", "yellow");
+        }else{}; 
+    }
+
+    function upLeft(){
+        occupied = false;
+        if(board[row][column][colour] = "white"){
+            row = row+1;
+            column = column-1;
+        }else if(board[row][column][colour] = "brown"){
+            row = row-1;
+            column = column+1;
+        }
+        if(board[row][column][piece] != null){
+            $('#'+row+column+'').css("background-color", "yellow");
+        }else{}; 
+    }
+
+    function downLeft(){
+        occupied = false;
+        if(board[row][column][colour] = "white"){
+            row = row-1;
+            column = column-1;
+        }else if(board[row][column][colour] = "brown"){
+            row = row+1;
+            column = column+1;
+        }
+        if(board[row][column][piece] != null){
+            $('#'+row+column+'').css("background-color", "yellow");
+        }else{}; 
+    }
+
+    function upRight(){
+        occupied = false;
+        if(board[row][column][colour] = "white"){
+            row = row+1;
+            column = column+1;
+        }else if(board[row][column][colour] = "brown"){
+            row = row-1;
+            column = column-1;
+        }
+        if(board[row][column][piece] != null){
+            $('#'+row+column+'').css("background-color", "yellow");
+        }else{}; 
+    }
+
+    function downRight(){
+        occupied = false;
+        if(board[row][column][colour] = "white"){
+            row = row-1;
+            column = column+1;
+        }else if(board[row][column][colour] = "brown"){
+            row = row+1;
+            column = column-1;
+        }
+        if(board[row][column][piece] != null){
+            $('#'+row+column+'').css("background-color", "yellow");
+        }else{}; 
+    }
+
+    function up2Left(){
+        occupied = false;
+        if(board[row][column][colour] = "white"){
+            row = row+2;
+            column = column-1;
+        }else if(board[row][column][colour] = "brown"){
+            row = row-2;
+            column = column+1;
+        }
+        if(board[row][column][piece] != null){
+            $('#'+row+column+'').css("background-color", "yellow");
+        }else{}; 
+    }
+
+    function down2Left(){
+        occupied = false;
+        if(board[row][column][colour] = "white"){
+            row = row-2;
+            column = column-1;
+        }else if(board[row][column][colour] = "brown"){
+            row = row+2;
+            column = column+1;
+        }
+        if(board[row][column][piece] != null){
+            $('#'+row+column+'').css("background-color", "yellow");
+        }else{}; 
+    }
+
+    function up2Right(){
+        occupied = false;
+        if(board[row][column][colour] = "white"){
+            row = row+2;
+            column = column+1;
+        }else if(board[row][column][colour] = "brown"){
+            row = row-2;
+            column = column-1;
+        }
+        if(board[row][column][piece] != null){
+            $('#'+row+column+'').css("background-color", "yellow");
+        }else{}; 
+    }
+
+    function down2Right(){
+        occupied = false;
+        if(board[row][column][colour] = "white"){
+            row = row-2;
+            column = column+1;
+        }else if(board[row][column][colour] = "brown"){
+            row = row+2;
+            column = column-1;
+        }
+        if(board[row][column][piece] != null){
+            $('#'+row+column+'').css("background-color", "yellow");
+        }else{}; 
+    }
+
+    function left2Up(){
+        occupied = false;
+        if(board[row][column][colour] = "white"){
+            row = row+1;
+            column = column-2;
+        }else if(board[row][column][colour] = "brown"){
+            row = row-1;
+            column = column+2;
+        }
+        if(board[row][column][piece] != null){
+            $('#'+row+column+'').css("background-color", "yellow");
+        }else{}; 
+    }
+
+    function left2Down(){
+        occupied = false;
+        if(board[row][column][colour] = "white"){
+            row = row-1;
+            column = column-2;
+        }else if(board[row][column][colour] = "brown"){
+            row = row+1;
+            column = column+2;
+        }
+        if(board[row][column][piece] != null){
+            $('#'+row+column+'').css("background-color", "yellow");
+        }else{}; 
+    }
+
+    function right2Up(){
+        occupied = false;
+        if(board[row][column][colour] = "white"){
+            row = row+1;
+            column = column+2;
+        }else if(board[row][column][colour] = "brown"){
+            row = row-1;
+            column = column-2;
+        }
+        if(board[row][column][piece] != null){
+            $('#'+row+column+'').css("background-color", "yellow");
+        }else{}; 
+    }
+
+    function right2Down(){
+        occupied = false;
+        if(board[row][column][colour] = "white"){
+            row = row-1;
+            column = column+2;
+        }else if(board[row][column][colour] = "brown"){
+            row = row+1;
+            column = column-2;
+        }
+        if(board[row][column][piece] != null){
+            $('#'+row+column+'').css("background-color", "yellow");
+        }else{}; 
+    }
+    
 });
