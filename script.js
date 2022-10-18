@@ -2,6 +2,8 @@ $(document).ready(function(){
     let row;
     let column;
 
+    let origPos;
+
     class square{
         constructor(number, piece) {
           this.column = number;
@@ -50,6 +52,16 @@ $(document).ready(function(){
             }
         }
 
+        /*
+        for(var i=1; i<5; i++){
+            row = board[i];
+            piece=null;
+            for(var j=1; j<9; j++){
+                row.push(new square(j, piece));
+            }
+        }
+        */
+
     }
 
     function buildDisplayBoard(){
@@ -61,6 +73,13 @@ $(document).ready(function(){
                 }else{
                     $('.board').append("<div id='"+i+j+"' class='squareWhite'></div>");
                 }
+            }
+        }
+
+        for(var i=1; i<5; i++){
+            for(var j=1; j<5; j++){
+                $('.bottomBox1').append("<div id='1GY"+i+j+"' class='squareGrave'></div>");
+                $('.bottomBox2').append("<div id='2GY"+i+j+"' class='squareGrave'></div>");
             }
         }
 
@@ -81,6 +100,8 @@ $(document).ready(function(){
                 }
             }
         }
+
+        origPos = board;
 
     }
 
