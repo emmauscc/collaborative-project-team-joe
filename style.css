@@ -126,13 +126,26 @@ body{
     background-color: #523e32;
 }
 
-.pieceBrown{
+.piece2{
     height: 80px;
     width: 80px;
     float: left;
     font-family: "Monaco", monospace;
     text-align: center;
-    background-color: yellow;
+    background-color: #719972;
+    margin: 10px;
+    line-height: 80px;
+}
+
+.piece1{
+    height: 80px;
+    width: 80px;
+    float: left;
+    font-family: "Monaco", monospace;
+    text-align: center;
+    background-color: #816353;
+    margin: 10px;
+    line-height: 80px;
 }
 
 

@@ -1,46 +1,108 @@
 $(document).ready(function(){
 
     class square{
-        constructor(number, piece, colour) {
+        constructor(number, piece) {
           this.column = number;
           this.piece = piece;
-          this.colour = colour;
-  
         }
-    }       
-    let row1=[];
-    let row2=[];
-    let row3=[]; 
-    let row4=[];
-    let row5=[];
-    let row6=[];
-    let row7=[];
-    let row8=[];
+    }      
     
-    let board = [row1, row2, row3, row4, row5, row6, row7, row8];
-    let whitePieces = ['wRook1', 'wKnight1', 'wBishop1', 'wKing', 'wQueen', 'wBishop2', 'wKnight2', 'wRook2', 'wPawn1', 'wPawn2', 'wPawn3', 'wPawn4', 'wPawn5', 'wPawn6', 'wPawn7', 'wPawn8'];
-    let blackPieces = ['bRook1', 'bKnight1', 'bBishop1', 'bKing', 'bQueen', 'bBishop2', 'bKnight2', 'bRook2', 'bPawn1', 'bPawn2', 'bPawn3', 'bPawn4', 'bPawn5', 'bPawn6', 'bPawn7', 'bPawn8'];
-
-    for(i=0; i<board.length; i++){
-        row = board[i];
-        piece=null;
-        for(j=0; j<8; j++){
-            if((i%2==0) == (j%2==1)){
-                colour = "black";
-                $('.board').append("<div id='"+(i+1)+(j+1)+"' class='squareBrown'></div>");
-                console.log('IT WORKED!!!');
-            }else{
-                colour = "white";
-                $('.board').append("<div id='"+(i+1)+(j+1)+"' class='squareWhite'></div>");
-                console.log('IT WORKED!!!');
-            }
-            row.push(new square(j, piece, colour));
+    class piece{
+        constructor(playerNo, type, number) {
+          this.playerNo = playerNo;
+          this.type = type;
+          this.number = number;
         }
+    }      
+
+    let row1=[null];
+    let row2=[null];
+    let row3=[null]; 
+    let row4=[null];
+    let row5=[null];
+    let row6=[null];
+    let row7=[null];
+    let row8=[null];
+    
+    let board = [null, row1, row2, row3, row4, row5, row6, row7, row8];
+
+    let p1Pawns = [];
+    let p2Pawns = [];
+    let p1Pieces = [null, new piece(1, "Rook", 1), new piece(1, "Knight", 1), new piece(1, "Bishop", 1), new piece(1, "Queen", 1), new piece(1, "King", 1), new piece(1, "Bishop", 2), new piece(1, "Knight", 2), new piece(1, "Rook", 2)];
+    let p2Pieces = [null, new piece(2, "Rook", 1), new piece(2, "Knight", 1), new piece(2, "Bishop", 1), new piece(2, "Queen", 1), new piece(2, "King", 1), new piece(2, "Bishop", 2), new piece(2, "Knight", 2), new piece(2, "Rook", 2)];
+
+    for (var i=1; i<9; i++){
+
+        p1Pawns[i] = new piece(1, "Pawn", i);
+        p2Pawns[i] = new piece(2, "Pawn", i);
+
+    } 
+
+    function buildDataBoard(){
+
+        for(var i=1; i<9; i++){
+            row = board[i];
+            piece=null;
+            for(var j=1; j<9; j++){
+                row.push(new square(j, piece));
+            }
+        }
+
+
+
+        console.log(board);
+
     }
 
-    $('#11').append("<div class='pieceBrown'> PIECE</div>");
+    function buildDisplayBoard(){
 
-    console.log(board);
+        for(var i=1; i<9; i++){
+            for(var j=1; j<9; j++){
+                if((i%2==0) == (j%2==1)){
+                    $('.board').append("<div id='"+i+j+"' class='squareBrown'></div>")
+                }else{
+                    $('.board').append("<div id='"+i+j+"' class='squareWhite'></div>");
+                }
+            }
+        }
+
+    }
+
+    function origPieces(){
+
+        for(var i=1; i<5; i++){
+            for (var j=1; j<9; j++){
+                if (i==1){
+                    board[i][j]['piece'] = p1Pieces[j];
+                } else if (i==2){
+                    board[i][j]['piece'] = p1Pawns[j];   
+                } else if (i==3) {
+                    board[i+4][j]['piece'] = p2Pawns[j];
+                } else if (i==4) {
+                    board[i+4][j]['piece'] = p2Pieces[j];
+                }
+            }
+        }
+
+    }
+
+    function displayPieces(){
+
+        for(var i=1; i<9; i++){
+            for (var j=1; j<9; j++){
+                if (board[i][j]['piece'] != null){
+                    $('#'+i+j).append("<div class='piece"+board[i][j]['piece']['playerNo']+"'>"+board[i][j]['piece']['type']+"</div>");
+                }
+            }
+        }
+
+    }
+
+    buildDataBoard();
+    buildDisplayBoard();
+    origPieces();
+    displayPieces();
+
     //initialiseBoard()
 
 });
