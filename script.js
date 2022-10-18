@@ -71,13 +71,13 @@ $(document).ready(function(){
         for(var i=1; i<5; i++){
             for (var j=1; j<9; j++){
                 if (i==1){
-                    board[i][j]['piece'] = p1Pieces[j];
+                    board[i][j]['piece'] = p2Pieces[j];
                 } else if (i==2){
-                    board[i][j]['piece'] = p1Pawns[j];   
+                    board[i][j]['piece'] = p2Pawns[j];   
                 } else if (i==3) {
-                    board[i+4][j]['piece'] = p2Pawns[j];
+                    board[i+4][j]['piece'] = p1Pawns[j];
                 } else if (i==4) {
-                    board[i+4][j]['piece'] = p2Pieces[j];
+                    board[i+4][j]['piece'] = p1Pieces[j];
                 }
             }
         }
