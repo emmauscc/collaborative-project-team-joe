@@ -125,25 +125,55 @@ $(document).ready(function(){
     //initialiseBoard()
     console.log(board);
 
-    /*
+    
     $('.squareBrown, .squareWhite').click(function piece(){
         let id = $(this).attr('id');
         row = id.charAt(0);
         column = id.charAt(1);
-        //let piece = board[row][column][piece];
-        console.log("row: "+row+"; column: "+column);
+        let movingPiece = board[row][column]['piece']['type'];
+        console.log("row: "+row+"; column: "+column+" piece: "+movingPiece);
+
+        if(movingPiece == 'Rook'){
+            until(up);
+            until(down);
+            until(left);
+            unti(right);
+        }else if(movingPiece == 'Knight'){
+            up2Left();
+            up2Right();
+            down2Left();
+            down2Right();
+            left2Up();
+            left2Down();
+            right2Up();
+            right2Down();
+        }else if(movingPiece == 'Bishop'){
+            until(upRight); 
+            until(upLeft);
+            until(downRight);
+            until(downLeft);
+        }else if(movingPiece == 'King'){
+            up();
+            down();
+            left();
+            right();
+        }else if(movingPiece == 'Queen'){
+            until(up); 
+            until(down); 
+            until(left); 
+            until(right);
+            until(upLeft); 
+            until(upRight); 
+            until(downLeft); 
+            until(downRight);
+        }else if(movingPiece == 'Pawn'){
+            up();
+            // make an if statement for if the piece is in their original position they can move twice. 
+        }
+
     });
-
-    let pieces = [rook, knight, bishop, king, queen, pawn];
-    let rook = [until(up), until(down), until(left), unti(right)];
-    let knight = [up2Left(), up2Right(), down2Left(), down2Right(), left2Up(), left2Down(), right2Up(), right2Down()];
-    let bishop = [until(upRight), until(upLeft), until(downRight), until(downLeft)];
-    let king = [up(), down(), left(), right()];
-    let queen = [until(up), until(down), until(left), until(right), until(upLeft), until(upRight), until(downLeft), until(downRight)];
-    let pawn = [up()];
-
-    */
-
+    
+    
     function until(move) {
         occupied = false;
         while(occupied == false){
@@ -153,9 +183,9 @@ $(document).ready(function(){
 
     function up(){                  // note to self, update these so they check if the edge of the board is there 
         occupied = false;
-        if(board[row][column][colour] = "white"){
+        if(board[row][column]['piece']['playerNo'] == 1){
             row = row+1;
-        }else if(board[row][column][colour] = "brown"){
+        }else if(board[row][column][colour] = 1){
             row = row-1;
         }
         if(board[row][column][piece] != null){
