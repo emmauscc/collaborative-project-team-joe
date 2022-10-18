@@ -19,7 +19,7 @@ body{
 }
 
 .container{
-    height: 1020px;
+    height: 1040px;
     width: 1640px;
     background-color: black;
     float: left;
@@ -43,7 +43,7 @@ body{
 .banner{
     height: 20px;
     width: 1640px;
-    background-color: #f7f0e0;
+    background-color: #523e32;
     float: left;
     font-family: "Monaco", monospace;
     text-align: center;
@@ -83,7 +83,7 @@ body{
 .sideBox{
     height: 800px;
     width: 420px;
-    background-color: #f7f0e0;
+    background-color: #523e32;
     float: left;
     font-family: "Monaco", monospace;
     text-align: center;
