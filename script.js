@@ -2,6 +2,8 @@ $(document).ready(function(){
     let row;
     let column;
 
+    let origPos;
+
     class square{
         constructor(number, piece) {
           this.column = number;
@@ -50,6 +52,16 @@ $(document).ready(function(){
             }
         }
 
+        /*
+        for(var i=1; i<5; i++){
+            row = board[i];
+            piece=null;
+            for(var j=1; j<9; j++){
+                row.push(new square(j, piece));
+            }
+        }
+        */
+
     }
 
     function buildDisplayBoard(){
@@ -64,6 +76,13 @@ $(document).ready(function(){
             }
         }
 
+        for(var i=1; i<5; i++){
+            for(var j=1; j<5; j++){
+                $('.bottomBox1').append("<div id='1GY"+i+j+"' class='squareGrave'></div>");
+                $('.bottomBox2').append("<div id='2GY"+i+j+"' class='squareGrave'></div>");
+            }
+        }
+
     }
 
     function origPieces(){
@@ -71,16 +90,18 @@ $(document).ready(function(){
         for(var i=1; i<5; i++){
             for (var j=1; j<9; j++){
                 if (i==1){
-                    board[i][j]['piece'] = p1Pieces[j];
+                    board[i][j]['piece'] = p2Pieces[j];
                 } else if (i==2){
-                    board[i][j]['piece'] = p1Pawns[j];   
+                    board[i][j]['piece'] = p2Pawns[j];   
                 } else if (i==3) {
-                    board[i+4][j]['piece'] = p2Pawns[j];
+                    board[i+4][j]['piece'] = p1Pawns[j];
                 } else if (i==4) {
-                    board[i+4][j]['piece'] = p2Pieces[j];
+                    board[i+4][j]['piece'] = p1Pieces[j];
                 }
             }
         }
+
+        origPos = board;
 
     }
 
