@@ -50,10 +50,6 @@ $(document).ready(function(){
             }
         }
 
-
-
-        console.log(board);
-
     }
 
     function buildDisplayBoard(){
@@ -108,6 +104,7 @@ $(document).ready(function(){
     //initialiseBoard()
     console.log(board);
 
+    /*
     $('.squareBrown, .squareWhite').click(function piece(){
         let id = $(this).attr('id');
         row = id.charAt(0);
@@ -123,6 +120,8 @@ $(document).ready(function(){
     let king = [up(), down(), left(), right()];
     let queen = [until(up), until(down), until(left), until(right), until(upLeft), until(upRight), until(downLeft), until(downRight)];
     let pawn = [up()];
+
+    */
 
     function until(move) {
         occupied = false;
