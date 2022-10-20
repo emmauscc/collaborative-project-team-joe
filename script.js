@@ -5,6 +5,7 @@ $(document).ready(function(){
     let first = true
     let playerMoving;
     let occupiedBy;
+    let id;
 
     let origPos;
 
@@ -56,7 +57,7 @@ $(document).ready(function(){
             }
         }
 
-        /*
+        
         for(var i=1; i<5; i++){
             row = board[i];
             piece=null;
@@ -64,7 +65,7 @@ $(document).ready(function(){
                 row.push(new square(j, piece));
             }
         }
-        */
+        
 
     }
 
@@ -86,6 +87,84 @@ $(document).ready(function(){
                 $('.bottomBox2').append("<div id='2GY"+i+j+"' class='squareGrave'></div>");
             }
         }
+
+        $('.squareBrown, .squareWhite').click(function piece(){
+
+            console.log("clicked a piece");
+            
+            if(first != true){
+                $('.board').html('');
+                $('.bottomBox1').html("<div id='p1' class='subtitle'>Graveyard</div>");
+                $('.bottomBox2').html("<div id='p2' class='subtitle'>Graveyard</div>");
+    
+                buildDisplayBoard();
+                displayPieces();
+                console.log('i rebuilt the board');
+    
+                /*
+                if(colour == 'squareBrown'){
+                    $('#'+row+column+'').css("background-color", "#f7f0e0");
+                }else if(colour == 'squareWhite'){
+                    $('#'+row+column+'').css("background-color", "#523e32");
+                }else{
+                }
+    
+                */
+            }
+            
+            id = $(this).attr('id');
+            row = parseFloat(id.charAt(0));
+            column = parseFloat(id.charAt(1));
+            playerMoving = board[row][column]['piece']['playerNo'];
+            if(board[row][column]['piece'] != null){
+                movingPiece = board[row][column]['piece']['type'];
+                colour = $(this).attr('class');
+            }else{
+                movingPiece = null;
+                colour = null;
+            }
+            console.log("row: "+row+"; column: "+column+" piece: "+movingPiece);
+    
+            if(movingPiece == 'Rook'){
+                until(up);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until(down);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until(left);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                unti(right);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            }else if(movingPiece == 'Knight'){
+                up2Left();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                up2Right();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                down2Left();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                down2Right();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                left2Up();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                left2Down();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                right2Up();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                right2Down();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            }else if(movingPiece == 'Bishop'){
+                until(upRight); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until(upLeft);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until(downRight);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until(downLeft);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            }else if(movingPiece == 'King'){
+                up();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                down();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                left();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                right();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            }else if(movingPiece == 'Queen'){
+                until(up); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until(down); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until(left); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until(right);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until(upLeft); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until(upRight); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until(downLeft); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until(downRight);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            }else if(movingPiece == 'Pawn'){
+                up();
+                // make an if statement for if the piece is in their original position they can move twice. 
+            }
+            first = false;
+    
+        });
 
     }
 
@@ -130,63 +209,7 @@ $(document).ready(function(){
     console.log(board);
 
     
-    $('.squareBrown, .squareWhite').click(function piece(){
-        if(first != true){
-            if(colour == 'squareBrown'){
-                $('#'+row+column+'').css("background-color", "#f7f0e0");
-            }else{
-                $('#'+row+column+'').css("background-color", "#523e32");
-            }
-        }
-        
-        colour = $(this).attr('class');
-        let id = $(this).attr('id');
-        row = parseFloat(id.charAt(0));
-        column = parseFloat(id.charAt(1));
-        let movingPiece = board[row][column]['piece']['type'];
-        console.log("row: "+row+"; column: "+column+" piece: "+movingPiece);
-
-        if(movingPiece == 'Rook'){
-            until(up);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(down);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(left);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            unti(right);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-        }else if(movingPiece == 'Knight'){
-            up2Left();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            up2Right();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            down2Left();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            down2Right();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            left2Up();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            left2Down();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            right2Up();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            right2Down();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-        }else if(movingPiece == 'Bishop'){
-            until(upRight); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(upLeft);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(downRight);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(downLeft);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-        }else if(movingPiece == 'King'){
-            up();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            down();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            left();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            right();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-        }else if(movingPiece == 'Queen'){
-            until(up); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(down); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(left); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(right);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(upLeft); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(upRight); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(downLeft); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(downRight);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-        }else if(movingPiece == 'Pawn'){
-            console.log("running the up function");
-            up();
-            // make an if statement for if the piece is in their original position they can move twice. 
-        }
-        first = false;
-
-    });
+   
     
     
     function until(move) {
@@ -198,20 +221,19 @@ $(document).ready(function(){
 
     function up(){
         occupied = false;
-        playerMoving = board[row][column]['piece']['playerNo']
         if(playerMoving == 2){
             row = row+1;
         }else if(playerMoving == 1){
             row = row-1;
         }
 
-        if(1<=row<=8){
+        if(1<=row && row<=8){
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
                 occupiedBy = 'empty';
             }
-
+            
             if(occupiedBy == playerMoving){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
@@ -228,13 +250,13 @@ $(document).ready(function(){
 
     function down(){
         occupied = false;
-        if(board[row][column]['piece']['playerNo'] == 2){
+        if(playerMoving == 2){
             row = row-1;
-        }else if(board[row][column]['piece']['playerNo'] == 1){
+        }else if(playerMoving == 1){
             row = row+1;
         }
         
-        if(1<=row<=8){
+        if(1<=row && row<=8){
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
@@ -257,24 +279,39 @@ $(document).ready(function(){
 
     function left(){
         occupied = false;
-        if(board[row][column]['piece']['playerNo'] == 2){
+        if(playerMoving== 2){
             column = column-1;
-        }else if(board[row][column]['piece']['playerNo'] == 1){
+        }else if(playerMoving == 1){
             column = column+1;
         }
-        if(1<=column<=8 && board[row][column]['piece'] == null){
-            $('#'+row+column+'').css("background-color", "yellow");
-        }else{}; 
+        if(1<=column && column<=8){
+            if(board[row][column]['piece'] != null){
+                occupiedBy = board[row][column]['piece']['playerNo'];
+            }else{
+                occupiedBy = 'empty';
+            }
+
+            if(occupiedBy == playerMoving){
+                occupied = true;
+            }else if(occupiedBy == 'empty'){
+                $('#'+row+column+'').css("background-color", "yellow");
+                occupied == false; 
+            }else{
+                $('#'+row+column+'').css("background-color", "yellow");
+                occupied = true;
+            }
+
+        }else{};
     }
 
     function right(){
         occupied = false;
-        if(board[row][column]['piece']['playerNo'] == 2){
+        if(playerMoving == 2){
             column = column+1;
-        }else if(board[row][column]['piece']['playerNo'] == 1){
+        }else if(playerMoving == 1){
             column = column-1;
         }
-        if(1<=column<=8){
+        if(1<=column && column<=8){
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
@@ -297,10 +334,10 @@ $(document).ready(function(){
 
     function upLeft(){
         occupied = false;
-        if(board[row][column]['piece']['playerNo'] == 2){
+        if(playerMoving == 2){
             row = row+1;
             column = column-1;
-        }else if(board[row][column]['piece']['playerNo'] == 1){
+        }else if(playerMoving == 1){
             row = row-1;
             column = column+1;
         }
@@ -327,14 +364,14 @@ $(document).ready(function(){
 
     function downLeft(){
         occupied = false;
-        if(board[row][column]['piece']['playerNo'] == 2){
+        if(playerMoving == 2){
             row = row-1;
             column = column-1;
-        }else if(board[row][column]['piece']['playerNo'] == 1){
+        }else if(playerMoving == 1){
             row = row+1;
             column = column+1;
         }
-        if(1<=row<=8 && 1<=column<=8){
+        if(1<=row && row<=8 && 1<=column && column<=8){
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
@@ -357,14 +394,14 @@ $(document).ready(function(){
 
     function upRight(){
         occupied = false;
-        if(board[row][column]['piece']['playerNo'] == 2){
+        if(playerMoving == 2){
             row = row+1;
             column = column+1;
-        }else if(board[row][column]['piece']['playerNo'] == 1){
+        }else if(playerMoving == 1){
             row = row-1;
             column = column-1;
         }
-        if(1<=row<=8 && 1<=column<=8){
+        if(1<=row && row<=8 && 1<=column && column<=8){
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
@@ -386,14 +423,14 @@ $(document).ready(function(){
 
     function downRight(){
         occupied = false;
-        if(board[row][column]['piece']['playerNo'] == 2){
+        if(playerMoving == 2){
             row = row-1;
             column = column+1;
-        }else if(board[row][column]['piece']['playerNo'] == 1){
+        }else if(playerMoving== 1){
             row = row+1;
             column = column-1;
         }
-        if(1<=row<=8 && 1<=column<=8){
+        if(1<=row && row<=8 && 1<=column && column<=8){
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
@@ -415,14 +452,14 @@ $(document).ready(function(){
 
     function up2Left(){
         occupied = false;
-        if(board[row][column]['piece']['playerNo'] == 2){
+        if(playerMoving == 2){
             row = row+2;
             column = column-1;
-        }else if(board[row][column]['piece']['playerNo'] == 1){
+        }else if(playerMoving == 1){
             row = row-2;
             column = column+1;
         }
-        if(1<=row<=8 && 1<=column<=8){
+        if(1<=row && row<=8 && 1<=column && column<=8){
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
@@ -444,14 +481,18 @@ $(document).ready(function(){
 
     function down2Left(){
         occupied = false;
-        if(board[row][column]['piece']['playerNo'] == 2){
+        if(playerMoving == 2){
             row = row-2;
             column = column-1;
-        }else if(board[row][column]['piece']['playerNo'] == 1){
+        }else if(playerMoving == 1){
             row = row+2;
             column = column+1;
         }
-        if(1<=row<=8 && 1<=column<=8){
+
+        if(1<=row && row<=8 && 1<=column && column<=8){
+            console.log(board);
+            console.log(row);
+            console.log(column);
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
@@ -473,14 +514,14 @@ $(document).ready(function(){
 
     function up2Right(){
         occupied = false;
-        if(board[row][column]['piece']['playerNo'] == 2){
+        if(playerMoving== 2){
             row = row+2;
             column = column+1;
-        }else if(board[row][column]['piece']['playerNo'] == 1){
+        }else if(playerMoving == 1){
             row = row-2;
             column = column-1;
         }
-        if(1<=row<=8 && 1<=column<=8){
+        if(1<=row && row<=8 && 1<=column && column<=8){
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
@@ -502,14 +543,14 @@ $(document).ready(function(){
 
     function down2Right(){
         occupied = false;
-        if(board[row][column]['piece']['playerNo'] == 2){
+        if(playerMoving == 2){
             row = row-2;
             column = column+1;
         }else if(board[row][column]['piece']['playerNo'] == 1){
             row = row+2;
             column = column-1;
         }
-        if(1<=row<=8 && 1<=column<=8){
+        if(1<=row && row<=8 && 1<=column && column<=8){
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
@@ -531,14 +572,14 @@ $(document).ready(function(){
 
     function left2Up(){
         occupied = false;
-        if(board[row][column]['piece']['playerNo'] == 2){
+        if(playerMoving == 2){
             row = row+1;
             column = column-2;
-        }else if(board[row][column]['piece']['playerNo'] == 1){
+        }else if(playerMoving == 1){
             row = row-1;
             column = column+2;
         }
-        if(1<=row<=8 && 1<=column<=8){
+        if(1<=row && row<=8 && 1<=column && column<=8){
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
@@ -560,14 +601,14 @@ $(document).ready(function(){
 
     function left2Down(){
         occupied = false;
-        if(board[row][column]['piece']['playerNo'] == 2){
+        if(playerMoving == 2){
             row = row-1;
             column = column-2;
-        }else if(board[row][column]['piece']['playerNo'] == 1){
+        }else if(playerMoving == 1){
             row = row+1;
             column = column+2;
         }
-        if(1<=row<=8 && 1<=column<=8){
+        if(1<=row && row<=8 && 1<=column && column<=8){
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
@@ -589,19 +630,25 @@ $(document).ready(function(){
 
     function right2Up(){
         occupied = false;
-        if(board[row][column]['piece']['playerNo'] == 2){
+        if(playerMoving == 2){
             row = row+1;
-            column = column+2;
-        }else if(board[row][column]['piece']['playerNo'] == 1){
-            row = row-1;
             column = column-2;
+        }else if(playerMoving == 1){
+            row = row-1;
+            column = column+2;
         }
-        if(1<=row<=8 && 1<=column<=8){
+        console.log("row: "+row+" column: "+column);
+        if(1<=row && row<=8 && 1<=column && column<=8){
+            console.log("i'm running");
+
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
                 occupiedBy = 'empty';
             }
+
+            console.log(playerMoving);
+            console.log(occupiedBy);
 
             if(occupiedBy == playerMoving){
                 occupied = true;
@@ -618,14 +665,14 @@ $(document).ready(function(){
 
     function right2Down(){
         occupied = false;
-        if(board[row][column]['piece']['playerNo'] == 2){
+        if(playerMoving == 2){
             row = row-1;
             column = column+2;
-        }else if(board[row][column]['piece']['playerNo'] == 1){
+        }else if(playerMoving == 1){
             row = row+1;
             column = column-2;
         }
-        if(1<=row<=8 && 1<=column<=8){
+        if(1<=row && row<=8 && 1<=column && column<=8){
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
