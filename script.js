@@ -8,6 +8,7 @@ $(document).ready(function(){
     let playerMoving;
     let occupiedBy;
     let id;
+    let occupied = false;
 
     let origPos;
 
@@ -129,10 +130,13 @@ $(document).ready(function(){
             console.log("row: "+row+"; column: "+column+" piece: "+movingPiece);
     
             if(movingPiece == 'Rook'){
-                until('up');row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                until('down');row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                until('left');row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                until('right');row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+
+                console.log("running Rook");
+
+                until(up);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until(down);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until(left);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until(right);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
             }else if(movingPiece == 'Knight'){
                 up2Left();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
                 up2Right();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
@@ -241,75 +245,107 @@ $(document).ready(function(){
     
     //bishop running until - moves diagonally until the square is occupied and can't move any further
     function until(move) {
+        //move is a function being passed through until function
         console.log(move);
         occupied = false;
-        var fnstring = move;
-        var fn = window[fnstring];
+        
+        //var fnstring = move;
+        //var fn = window[fnstring];
+
+        //console.log(fn);
         if (typeof fn === "function")fn();
         
         while(occupied == false){
             console.log("moves are being made");
             move();
+            //runs move 3 times, then up function is no longer being run?
         }
     }
 
-    function up(){
+    function up(){ //currently running 3 times before it doesn't run anymore but the whole ting turns into an infinite loop
+        
+        console.log("running up function");
         if(playerMoving == 2){
             row = row+1;
         }else if(playerMoving == 1){
             row = row-1;
         }
 
-        if(1<=row && row<=8){
+        if(row>=1 && row<=8){
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
                 occupiedBy = 'empty';
             }
             
-            if(occupiedBy == playerMoving){
+            if(occupiedBy == playerMoving){ //occupied by own piece
                 occupied = true;
-            }else if(occupiedBy == 'empty'){
+                console.log("occupied true");
+            }else if(occupiedBy == 'empty'){ //no piece on the empty grid
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
-            }else{
-                $('#'+row+column+'').css("background-color", "yellow");
+                occupied = false; 
+                
+                console.log("occupied false");
+            }else{      //occupied by opposite piece ?
+                
                 occupied = true;
+
+                console.log("else activated");
+                //$('#'+row+column+'').css("background-color", "yellow");
+                //occupied = true;
             }
 
-        }else{};
+        }else{
+
+            occupied = true; //out of bounds
+
+        };
 
     }
 
-    function down(){
+    function down(){ //this is being run as an INFINITE LOOP
+
+        console.log("down running");
         if(playerMoving == 2){
             row = row-1;
         }else if(playerMoving == 1){
             row = row+1;
         }
         
-        if(1<=row && row<=8){
+        if(row>=1 && row<=8){
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
                 occupiedBy = 'empty';
             }
+            
+            if(occupiedBy == playerMoving){ //occupied by own piece
+                occupied = true;
+                console.log("occupied true");
+            }else if(occupiedBy == 'empty'){ //no piece on the empty grid
+                $('#'+row+column+'').css("background-color", "yellow");
+                occupied = false; 
+                
+                console.log("occupied false");
+            }else{      //occupied by opposite piece ?
+                
+                occupied = true;
 
-            if(occupiedBy == playerMoving){
-                occupied = true;
-            }else if(occupiedBy == 'empty'){
-                $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
-            }else{
-                $('#'+row+column+'').css("background-color", "yellow");
-                occupied = true;
+                console.log("else activated");
+                //$('#'+row+column+'').css("background-color", "yellow");
+                //occupied = true;
             }
 
-        }else{};
+        }else{
+
+            occupied = true; //out of bounds
+        };
  
     }
 
     function left(){
+
+        console.log("running left");
         if(playerMoving== 2){
             column = column-1;
         }else if(playerMoving == 1){
@@ -326,16 +362,21 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
             }
 
-        }else{};
+        }else{
+
+            occupied = true; //out of bounds
+        };
     }
 
     function right(){
+
+        console.log("running right");
         if(playerMoving == 2){
             column = column+1;
         }else if(playerMoving == 1){
@@ -352,13 +393,16 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
             }
 
-        }else{};
+        }else{
+
+            occupied = true; //out of bounds
+        };
 
     }
 
@@ -381,7 +425,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -410,7 +454,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -440,7 +484,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -468,7 +512,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -496,7 +540,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -528,7 +572,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -556,7 +600,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -584,7 +628,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -612,7 +656,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -640,7 +684,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -674,7 +718,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -702,7 +746,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
