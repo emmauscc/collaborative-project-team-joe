@@ -93,8 +93,6 @@ $(document).ready(function(){
         }
 
         $('.squareBrown, .squareWhite').click(function piece(){
-
-            console.log("clicked a piece");
             
             if(first != true){
                 $('.board').html("<div class='smallBanner'></div>");
@@ -103,10 +101,8 @@ $(document).ready(function(){
     
                 buildDisplayBoard();
                 displayPieces();
-                console.log('i rebuilt the board');
     
                 if($(this).css('background-color')=='yellow'){
-                    console.log('this worked?????');
                     movingToRow = parseFloat($(this).attr('id').charAt(0));
                     movingToColumn = parseFloat($(this).attr('id').charAt(1));
                     movePiece();
@@ -135,16 +131,12 @@ $(document).ready(function(){
             
             
             if($(this).css('background-color')!='yellow'){
-                console.log("i clicked a non-yellow piece");
                 showAvailableMoves();
             }
             
             function showAvailableMoves() {
                 console.log(movingPiece);
-                if(movingPiece == 'Rook'){
-
-                    console.log("running Rook");
-    
+                if(movingPiece == 'Rook'){    
                     until(up);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
                     until(down);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
                     until(left);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
@@ -179,6 +171,9 @@ $(document).ready(function(){
                     until(downRight);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
                 }else if(movingPiece == 'Pawn'){
                     up();
+                    if(row==6 || row==3){
+                        up();
+                    }
                     // make an if statement for if the piece is in their original position they can move twice. 
                 }
             }
@@ -270,7 +265,6 @@ $(document).ready(function(){
         if (typeof fn === "function")fn();
         
         while(occupied == false){
-            console.log("moves are being made");
             move();
             //runs move 3 times, then up function is no longer being run?
         }
@@ -278,7 +272,6 @@ $(document).ready(function(){
 
     function up(){ //currently running 3 times before it doesn't run anymore but the whole ting turns into an infinite loop
         
-        console.log("running up function");
         if(playerMoving == 2){
             row = row+1;
         }else if(playerMoving == 1){
@@ -294,17 +287,13 @@ $(document).ready(function(){
             
             if(occupiedBy == playerMoving){ //occupied by own piece
                 occupied = true;
-                console.log("occupied true");
             }else if(occupiedBy == 'empty'){ //no piece on the empty grid
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = false; 
                 
-                console.log("occupied false");
             }else{      //occupied by opposite piece ?
                 
                 occupied = true;
-
-                console.log("else activated");
                 //$('#'+row+column+'').css("background-color", "yellow");
                 //occupied = true;
             }
@@ -319,7 +308,6 @@ $(document).ready(function(){
 
     function down(){ //this is being run as an INFINITE LOOP
 
-        console.log("down running");
         if(playerMoving == 2){
             row = row-1;
         }else if(playerMoving == 1){
@@ -335,17 +323,13 @@ $(document).ready(function(){
             
             if(occupiedBy == playerMoving){ //occupied by own piece
                 occupied = true;
-                console.log("occupied true");
             }else if(occupiedBy == 'empty'){ //no piece on the empty grid
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = false; 
                 
-                console.log("occupied false");
             }else{      //occupied by opposite piece ?
                 
                 occupied = true;
-
-                console.log("else activated");
                 //$('#'+row+column+'').css("background-color", "yellow");
                 //occupied = true;
             }
@@ -359,7 +343,6 @@ $(document).ready(function(){
 
     function left(){
 
-        console.log("running left");
         if(playerMoving== 2){
             column = column-1;
         }else if(playerMoving == 1){
@@ -390,7 +373,6 @@ $(document).ready(function(){
 
     function right(){
 
-        console.log("running right");
         if(playerMoving == 2){
             column = column+1;
         }else if(playerMoving == 1){
@@ -483,7 +465,6 @@ $(document).ready(function(){
     }
 
     function upRight(){
-        console.log("going up and right");
         if(playerMoving == 2){
             row = row+1;
             column = column-1;
@@ -583,9 +564,7 @@ $(document).ready(function(){
         }
 
         if(1<=row && row<=8 && 1<=column && column<=8){
-            console.log(board);
-            console.log(row);
-            console.log(column);
+        
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
@@ -740,19 +719,13 @@ $(document).ready(function(){
             row = row-1;
             column = column+2;
         }
-        console.log("row: "+row+" column: "+column);
         if(1<=row && row<=8 && 1<=column && column<=8){
-            console.log("i'm running");
 
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
                 occupiedBy = 'empty';
             }
-
-            console.log(playerMoving);
-            console.log(occupiedBy);
-
             if(occupiedBy == playerMoving){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
