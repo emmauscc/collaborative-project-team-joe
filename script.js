@@ -486,7 +486,7 @@ $(document).ready(function(){
         console.log("going up and right");
         if(playerMoving == 2){
             row = row+1;
-            column = column+1;
+            column = column-1;
         }else if(playerMoving == 1){
             row = row-1;
             column = column+1;
@@ -516,10 +516,10 @@ $(document).ready(function(){
     function downRight(){
         if(playerMoving == 2){
             row = row-1;
-            column = column+1;
+            column = column-1;
         }else if(playerMoving== 1){
             row = row+1;
-            column = column-1;
+            column = column+1;
         }
         if(1<=row && row<=8 && 1<=column && column<=8){
             if(board[row][column]['piece'] != null){
