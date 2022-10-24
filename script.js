@@ -1,11 +1,14 @@
 $(document).ready(function(){
     let row = 1;
     let column = 1;
+    let movingToColumn = 1;
+    let movingToRow = 1;
     let colour = 'squareBrown';
     let first = true
     let playerMoving;
     let occupiedBy;
     let id;
+    let occupied = false;
 
     let origPos;
 
@@ -81,12 +84,10 @@ $(document).ready(function(){
             }
         }
 
-        $('.board').append("<div class='smallBanner'></div>");
-
         for(var i=1; i<5; i++){
             for(var j=1; j<5; j++){
-                $('#GY1').append("<div id='1GY"+i+j+"' class='squareGrave'></div>");
-                $('#GY2').append("<div id='2GY"+i+j+"' class='squareGrave'></div>");
+                $('.bottomBox1').append("<div id='1GY"+i+j+"' class='squareGrave'></div>");
+                $('.bottomBox2').append("<div id='2GY"+i+j+"' class='squareGrave'></div>");
             }
         }
 
@@ -95,7 +96,7 @@ $(document).ready(function(){
             console.log("clicked a piece");
             
             if(first != true){
-                $('.board').html('');
+                $('.board').html("<div class='smallBanner'></div>");
                 $('.bottomBox1').html("<div id='p1' class='subtitle'>Graveyard</div>");
                 $('.bottomBox2').html("<div id='p2' class='subtitle'>Graveyard</div>");
     
@@ -103,23 +104,24 @@ $(document).ready(function(){
                 displayPieces();
                 console.log('i rebuilt the board');
     
-                /*
-                if(colour == 'squareBrown'){
-                    $('#'+row+column+'').css("background-color", "#f7f0e0");
-                }else if(colour == 'squareWhite'){
-                    $('#'+row+column+'').css("background-color", "#523e32");
+                if($(this).css('background-color')=='yellow'){
+                    console.log('this worked?????');
+                    movingToRow = parseFloat($(this).attr('id').charAt(0));
+                    movingToColumn = parseFloat($(this).attr('id').charAt(1));
+                    movePiece();
                 }else{
                 }
-    
-                */
             }
             
             id = $(this).attr('id');
             row = parseFloat(id.charAt(0));
+            storedRow = parseFloat(id.charAt(0));
             column = parseFloat(id.charAt(1));
-            playerMoving = board[row][column]['piece']['playerNo'];
+            storedColumn = parseFloat(id.charAt(1));
             if(board[row][column]['piece'] != null){
                 movingPiece = board[row][column]['piece']['type'];
+                playerMoving = board[row][column]['piece']['playerNo'];
+                pieceNumber = board[row][column]['piece']['number'];
                 colour = $(this).attr('class');
             }else{
                 movingPiece = null;
@@ -128,10 +130,13 @@ $(document).ready(function(){
             console.log("row: "+row+"; column: "+column+" piece: "+movingPiece);
     
             if(movingPiece == 'Rook'){
+
+                console.log("running Rook");
+
                 until(up);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
                 until(down);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
                 until(left);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                unti(right);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until(right);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
             }else if(movingPiece == 'Knight'){
                 up2Left();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
                 up2Right();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
@@ -143,23 +148,23 @@ $(document).ready(function(){
                 right2Down();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
             }else if(movingPiece == 'Bishop'){
                 until(upRight); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                until(upLeft);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                until(downRight);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                until(downLeft);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until('upLeft');row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until('downRight');row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until('downLeft');row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
             }else if(movingPiece == 'King'){
                 up();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
                 down();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
                 left();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
                 right();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
             }else if(movingPiece == 'Queen'){
-                until(up); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                until(down); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                until(left); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                until(right);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                until(upLeft); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                until(upRight); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                until(downLeft); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                until(downRight);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until('up'); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until('down'); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until('left'); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until('right');row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until('upLeft'); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until('upRight'); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until('downLeft'); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                until('downRight');row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
             }else if(movingPiece == 'Pawn'){
                 up();
                 // make an if statement for if the piece is in their original position they can move twice. 
@@ -168,7 +173,33 @@ $(document).ready(function(){
     
         });
 
+        function movePiece() {
+            class piece{
+                constructor(playerNo, type, number) {
+                  this.playerNo = playerNo;
+                  this.type = type;
+                  this.number = number;
+                }       
+            }
+            console.log(" previous row: "+storedRow+" previous column: "+storedColumn);
+            console.log("Piece type: "+movingPiece+" Piece number: "+pieceNumber+" Player Moving: "+playerMoving);
+            console.log("moving to this row: "+movingToRow+" and moving to this column: "+movingToColumn);
+            board[storedRow][storedColumn]['piece'] = null;
+            board[movingToRow][movingToColumn]['piece'] = [];
+            board[movingToRow][movingToColumn]['piece'] = new piece(playerMoving, movingPiece, pieceNumber);
+            console.log(board);
+            $('.board').html("<div class='smallBanner'></div>");
+            $('.bottomBox1').html("<div id='p1' class='subtitle'>Graveyard</div>");
+            $('.bottomBox2').html("<div id='p2' class='subtitle'>Graveyard</div>");
+        
+            buildDisplayBoard();
+            displayPieces();
+        }
+
     }
+
+    
+    
 
     function origPieces(){
 
@@ -177,9 +208,9 @@ $(document).ready(function(){
                 if (i==1){
                     board[i][j]['piece'] = p2Pieces[j];
                 } else if (i==2){
-                    board[i][j]['piece'] = p2Pawns[j];   
+                    board[4][j]['piece'] = p2Pawns[j];   
                 } else if (i==3) {
-                    board[i+4][j]['piece'] = p1Pawns[j];
+                    board[5][j]['piece'] = p1Pawns[j];
                 } else if (i==4) {
                     board[i+4][j]['piece'] = p1Pieces[j];
                 }
@@ -210,77 +241,111 @@ $(document).ready(function(){
     //initialiseBoard()
     console.log(board);
 
-    
    
     
-    
+    //bishop running until - moves diagonally until the square is occupied and can't move any further
     function until(move) {
+        //move is a function being passed through until function
+        console.log(move);
         occupied = false;
+        
+        //var fnstring = move;
+        //var fn = window[fnstring];
+
+        //console.log(fn);
+        if (typeof fn === "function")fn();
+        
         while(occupied == false){
-            move();  // not sure if this will work but we'll see when i can test it :)
+            console.log("moves are being made");
+            move();
+            //runs move 3 times, then up function is no longer being run?
         }
     }
 
-    function up(){
-        occupied = false;
+    function up(){ //currently running 3 times before it doesn't run anymore but the whole ting turns into an infinite loop
+        
+        console.log("running up function");
         if(playerMoving == 2){
             row = row+1;
         }else if(playerMoving == 1){
             row = row-1;
         }
 
-        if(1<=row && row<=8){
+        if(row>=1 && row<=8){
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
                 occupiedBy = 'empty';
             }
             
-            if(occupiedBy == playerMoving){
+            if(occupiedBy == playerMoving){ //occupied by own piece
                 occupied = true;
-            }else if(occupiedBy == 'empty'){
+                console.log("occupied true");
+            }else if(occupiedBy == 'empty'){ //no piece on the empty grid
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
-            }else{
-                $('#'+row+column+'').css("background-color", "yellow");
+                occupied = false; 
+                
+                console.log("occupied false");
+            }else{      //occupied by opposite piece ?
+                
                 occupied = true;
+
+                console.log("else activated");
+                //$('#'+row+column+'').css("background-color", "yellow");
+                //occupied = true;
             }
 
-        }else{};
+        }else{
+
+            occupied = true; //out of bounds
+
+        };
 
     }
 
-    function down(){
-        occupied = false;
+    function down(){ //this is being run as an INFINITE LOOP
+
+        console.log("down running");
         if(playerMoving == 2){
             row = row-1;
         }else if(playerMoving == 1){
             row = row+1;
         }
         
-        if(1<=row && row<=8){
+        if(row>=1 && row<=8){
             if(board[row][column]['piece'] != null){
                 occupiedBy = board[row][column]['piece']['playerNo'];
             }else{
                 occupiedBy = 'empty';
             }
+            
+            if(occupiedBy == playerMoving){ //occupied by own piece
+                occupied = true;
+                console.log("occupied true");
+            }else if(occupiedBy == 'empty'){ //no piece on the empty grid
+                $('#'+row+column+'').css("background-color", "yellow");
+                occupied = false; 
+                
+                console.log("occupied false");
+            }else{      //occupied by opposite piece ?
+                
+                occupied = true;
 
-            if(occupiedBy == playerMoving){
-                occupied = true;
-            }else if(occupiedBy == 'empty'){
-                $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
-            }else{
-                $('#'+row+column+'').css("background-color", "yellow");
-                occupied = true;
+                console.log("else activated");
+                //$('#'+row+column+'').css("background-color", "yellow");
+                //occupied = true;
             }
 
-        }else{};
+        }else{
+
+            occupied = true; //out of bounds
+        };
  
     }
 
     function left(){
-        occupied = false;
+
+        console.log("running left");
         if(playerMoving== 2){
             column = column-1;
         }else if(playerMoving == 1){
@@ -297,17 +362,21 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
             }
 
-        }else{};
+        }else{
+
+            occupied = true; //out of bounds
+        };
     }
 
     function right(){
-        occupied = false;
+
+        console.log("running right");
         if(playerMoving == 2){
             column = column+1;
         }else if(playerMoving == 1){
@@ -324,24 +393,26 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
             }
 
-        }else{};
+        }else{
+
+            occupied = true; //out of bounds
+        };
 
     }
 
     function upLeft(){
-        occupied = false;
         if(playerMoving == 2){
             row = row+1;
-            column = column-1;
+            column = column+1;
         }else if(playerMoving == 1){
             row = row-1;
-            column = column+1;
+            column = column-1;
         }
         if(1<=column<=8){
             if(board[row][column]['piece'] != null){
@@ -354,7 +425,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -365,13 +436,12 @@ $(document).ready(function(){
     }
 
     function downLeft(){
-        occupied = false;
         if(playerMoving == 2){
             row = row-1;
-            column = column-1;
+            column = column+1;
         }else if(playerMoving == 1){
             row = row+1;
-            column = column+1;
+            column = column-1;
         }
         if(1<=row && row<=8 && 1<=column && column<=8){
             if(board[row][column]['piece'] != null){
@@ -384,7 +454,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -395,13 +465,13 @@ $(document).ready(function(){
     }
 
     function upRight(){
-        occupied = false;
+        console.log("going up and right");
         if(playerMoving == 2){
             row = row+1;
             column = column+1;
         }else if(playerMoving == 1){
             row = row-1;
-            column = column-1;
+            column = column+1;
         }
         if(1<=row && row<=8 && 1<=column && column<=8){
             if(board[row][column]['piece'] != null){
@@ -414,7 +484,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -424,7 +494,6 @@ $(document).ready(function(){
     }
 
     function downRight(){
-        occupied = false;
         if(playerMoving == 2){
             row = row-1;
             column = column+1;
@@ -443,7 +512,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -453,7 +522,6 @@ $(document).ready(function(){
     }
 
     function up2Left(){
-        occupied = false;
         if(playerMoving == 2){
             row = row+2;
             column = column-1;
@@ -472,7 +540,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -482,7 +550,6 @@ $(document).ready(function(){
     }
 
     function down2Left(){
-        occupied = false;
         if(playerMoving == 2){
             row = row-2;
             column = column-1;
@@ -505,7 +572,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -515,7 +582,6 @@ $(document).ready(function(){
     }
 
     function up2Right(){
-        occupied = false;
         if(playerMoving== 2){
             row = row+2;
             column = column+1;
@@ -534,7 +600,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -544,7 +610,6 @@ $(document).ready(function(){
     }
 
     function down2Right(){
-        occupied = false;
         if(playerMoving == 2){
             row = row-2;
             column = column+1;
@@ -563,7 +628,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -573,7 +638,6 @@ $(document).ready(function(){
     }
 
     function left2Up(){
-        occupied = false;
         if(playerMoving == 2){
             row = row+1;
             column = column-2;
@@ -592,7 +656,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -602,7 +666,6 @@ $(document).ready(function(){
     }
 
     function left2Down(){
-        occupied = false;
         if(playerMoving == 2){
             row = row-1;
             column = column-2;
@@ -621,7 +684,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -631,7 +694,6 @@ $(document).ready(function(){
     }
 
     function right2Up(){
-        occupied = false;
         if(playerMoving == 2){
             row = row+1;
             column = column-2;
@@ -656,7 +718,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
@@ -666,7 +728,6 @@ $(document).ready(function(){
     }
 
     function right2Down(){
-        occupied = false;
         if(playerMoving == 2){
             row = row-1;
             column = column+2;
@@ -685,7 +746,7 @@ $(document).ready(function(){
                 occupied = true;
             }else if(occupiedBy == 'empty'){
                 $('#'+row+column+'').css("background-color", "yellow");
-                occupied == false; 
+                occupied = false; 
             }else{
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = true;
