@@ -10,6 +10,9 @@ $(document).ready(function(){
     let occupiedBy;
     let id;
     let occupied = false;
+    let player1Grave = [];
+    let player2Grave = [];
+    let pieceTakenType = '';
 
     let origPos;
 
@@ -85,19 +88,19 @@ $(document).ready(function(){
             }
         }
 
-        for(var i=1; i<5; i++){
+        /*for(var i=1; i<5; i++){
             for(var j=1; j<5; j++){
                 $('.bottomBox1').append("<div id='1GY"+i+j+"' class='squareGrave'></div>");
                 $('.bottomBox2').append("<div id='2GY"+i+j+"' class='squareGrave'></div>");
             }
-        }
+        }*/
 
         $('.squareBrown, .squareWhite').click(function piece(){
             
             if(first != true){
                 $('.board').html("<div class='smallBanner'></div>");
-                $('.bottomBox1').html("<div id='p1' class='subtitle'>Graveyard</div>");
-                $('.bottomBox2').html("<div id='p2' class='subtitle'>Graveyard</div>");
+                $('#GY1').html("<div id='p1' class='subtitle'>Graveyard</div>");
+                $('#GY2').html("<div id='p2' class='subtitle'>Graveyard</div>");
     
                 buildDisplayBoard();
                 displayPieces();
@@ -171,9 +174,11 @@ $(document).ready(function(){
                     until(downRight);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
                 }else if(movingPiece == 'Pawn'){
                     up();
-                    if(row==6 || row==3){
+                    if((playerMoving==1 && row==6) || (playerMoving==2 && row==3)){
                         up();
                     }
+                    row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                    checkForTake();
                     // make an if statement for if the piece is in their original position they can move twice. 
                 }
             }
@@ -194,15 +199,35 @@ $(document).ready(function(){
             console.log("Piece type: "+movingPiece+" Piece number: "+pieceNumber+" Player Moving: "+playerMoving);
             console.log("moving to this row: "+movingToRow+" and moving to this column: "+movingToColumn);
             board[storedRow][storedColumn]['piece'] = null;
-            board[movingToRow][movingToColumn]['piece'] = [];
+            let pieceTaken = board[movingToRow][movingToColumn]['piece'];
+            if(pieceTaken == null){
+                board[movingToRow][movingToColumn]['piece'] = [];
+            }else{
+                pieceTakenType = board[movingToRow][movingToColumn]['piece']['type'];
+                if(playerMoving==1){
+                    player2Grave.push(pieceTakenType);
+                }else if(playerMoving == 2){
+                    player1Grave.push(pieceTakenType);
+                }
+                console.log(player1Grave);
+                console.log(player2Grave);
+
+                
+            }
             board[movingToRow][movingToColumn]['piece'] = new piece(playerMoving, movingPiece, pieceNumber);
             console.log(board);
             $('.board').html("<div class='smallBanner'></div>");
-            $('.bottomBox1').html("<div id='p1' class='subtitle'>Graveyard</div>");
-            $('.bottomBox2').html("<div id='p2' class='subtitle'>Graveyard</div>");
-        
+            $('#GY1').html("<div id='p1' class='subtitle'>Graveyard</div>");
+            $('#GY2').html("<div id='p2' class='subtitle'>Graveyard</div>");
+
             buildDisplayBoard();
             displayPieces();
+            
+            if(pieceTakenType == 'King'){
+                alert("Player "+playerMoving+" has WON!");
+                location.reload();
+            }else if(pieceTakenType == null){}
+        
         }
 
     }
@@ -238,6 +263,13 @@ $(document).ready(function(){
                     $('#'+i+j).append("<div class='piece"+board[i][j]['piece']['playerNo']+"'>"+board[i][j]['piece']['type']+"</div>");
                 }
             }
+        }
+
+        for(var j=0; j<player1Grave.length; j++){
+            $('#GY1').append("<div class='squareGrave'>"+player1Grave[j]+"</div>");
+        }
+        for(var g=0; g<player2Grave.length; g++){
+            $('#GY2').append("<div class='squareGrave'>"+player2Grave[g]+"</div>");
         }
 
     }
@@ -771,6 +803,64 @@ $(document).ready(function(){
             occupied = true;
 
         };
+    }
+
+    function checkForTake(){
+        if(playerMoving == 2){
+            row = row+1;
+            column = column-1;
+        }else if(playerMoving == 1){
+            row = row-1;
+            column = column+1;
+        }
+        if(1<=row && row<=8 && 1<=column && column<=8){
+            if(board[row][column]['piece'] != null){
+                occupiedBy = board[row][column]['piece']['playerNo'];
+            }else{
+                occupiedBy = 'empty';
+            }
+
+            if(occupiedBy == playerMoving){
+                occupied = true;
+            }else if(occupiedBy == 'empty'){
+                occupied = false; 
+            }else{
+                $('#'+row+column+'').css("background-color", "yellow");
+                occupied = true;
+            }
+
+        }else{
+            occupied = true;
+        };
+        row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+
+        if(playerMoving == 2){
+            row = row+1;
+            column = column+1;
+        }else if(playerMoving == 1){
+            row = row-1;
+            column = column-1;
+        }
+        if(column>=1 && column<=8 && row>=1 && row<=8){
+            if(board[row][column]['piece'] != null){
+                occupiedBy = board[row][column]['piece']['playerNo'];
+            }else{
+                occupiedBy = 'empty';
+            }
+
+            if(occupiedBy == playerMoving){
+                occupied = true;
+            }else if(occupiedBy == 'empty'){
+                occupied = false; 
+            }else{
+                $('#'+row+column+'').css("background-color", "yellow");
+                occupied = true;
+            }
+
+        }else{           
+            occupied = true;
+        };
+        
     }
     
 });
