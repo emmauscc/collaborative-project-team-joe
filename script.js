@@ -14,8 +14,6 @@ $(document).ready(function(){
     let player2Grave = [];
     let pieceTakenType = '';
 
-    let origPos;
-
     class square{
         constructor(number, piece) {
           this.column = number;
