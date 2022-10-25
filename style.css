@@ -141,8 +141,10 @@ body{
     width: 100px;
     float: left;
     font-family: "Monaco", monospace;
+    color: #f7f0e0;
     text-align: center;
     background-color: #53687E;
+    line-height: 100px;
 }
 
 .piece2{
