@@ -176,7 +176,7 @@ $(document).ready(function(){
             until(up); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
             until(down); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
             until(left); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(right);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            until(right); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
             until(upLeft); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
             until(upRight); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
             until(downLeft); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
