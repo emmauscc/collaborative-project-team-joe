@@ -86,13 +86,6 @@ $(document).ready(function(){
             }
         }
 
-        /*for(var i=1; i<5; i++){
-            for(var j=1; j<5; j++){
-                $('.bottomBox1').append("<div id='1GY"+i+j+"' class='squareGrave'></div>");
-                $('.bottomBox2').append("<div id='2GY"+i+j+"' class='squareGrave'></div>");
-            }
-        }*/
-
         $('.squareBrown, .squareWhite').click(function piece(){
             
             if(first != true){
@@ -108,12 +101,9 @@ $(document).ready(function(){
                     movingToColumn = parseFloat($(this).attr('id').charAt(1));
                     movePiece();
                 }else{
-                    //showAvailableMoves();
                 }
             }else{}
 
-            
-            
             id = $(this).attr('id');
             row = parseFloat(id.charAt(0));
             storedRow = parseFloat(id.charAt(0));
@@ -217,6 +207,7 @@ $(document).ready(function(){
             $('.board').html("<div class='smallBanner'></div>");
             $('#GY1').html("<div id='p1' class='subtitle'>Graveyard</div>");
             $('#GY2').html("<div id='p2' class='subtitle'>Graveyard</div>");
+            $('.board').html("<div class='smallBanner'></div>");
 
             buildDisplayBoard();
             displayPieces();
@@ -281,64 +272,6 @@ $(document).ready(function(){
     console.log(board);
 
    
-    
-    $('.squareBrown, .squareWhite').click(function piece(){
-        if(first != true){
-            if(colour == 'squareBrown'){
-                $('#'+row+column+'').css("background-color", "#f7f0e0");
-            }else{
-                $('#'+row+column+'').css("background-color", "#523e32");
-            }
-        }
-        
-        colour = $(this).attr('class');
-        let id = $(this).attr('id');
-        row = parseFloat(id.charAt(0));
-        column = parseFloat(id.charAt(1));
-        let movingPiece = board[row][column]['piece']['type'];
-        console.log("row: "+row+"; column: "+column+" piece: "+movingPiece);
-
-        if(movingPiece == 'Rook'){
-            until(up);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(down);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(left);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            unti(right);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-        }else if(movingPiece == 'Knight'){
-            up2Left();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            up2Right();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            down2Left();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            down2Right();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            left2Up();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            left2Down();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            right2Up();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            right2Down();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-        }else if(movingPiece == 'Bishop'){
-            until(upRight); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(upLeft);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(downRight);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(downLeft);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-        }else if(movingPiece == 'King'){
-            up();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            down();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            left();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            right();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-        }else if(movingPiece == 'Queen'){
-            until(up); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(down); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(left); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(right); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(upLeft); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(upRight); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(downLeft); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-            until(downRight);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-        }else if(movingPiece == 'Pawn'){
-            console.log("running the up function");
-            up();
-            // make an if statement for if the piece is in their original position they can move twice. 
-        }
-        first = false;
-
-    });
     
     
     //bishop running until - moves diagonally until the square is occupied and can't move any further
