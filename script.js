@@ -316,7 +316,7 @@ $(document).ready(function(){
             }else{      //occupied by opposite piece ?
                 
                 occupied = true;
-                //$('#'+row+column+'').css("background-color", "yellow");
+                $('#'+row+column+'').css("background-color", "yellow");
                 //occupied = true;
             }
 
@@ -352,7 +352,7 @@ $(document).ready(function(){
             }else{      //occupied by opposite piece ?
                 
                 occupied = true;
-                //$('#'+row+column+'').css("background-color", "yellow");
+                $('#'+row+column+'').css("background-color", "yellow");
                 //occupied = true;
             }
 
