@@ -16,7 +16,7 @@ body{
 .container{
     height: 1080px;
     width: 1680px;
-    background-color: black;
+    background-color: white;
     float: left;
     font-family: "Monaco", monospace;
     text-align: center;
