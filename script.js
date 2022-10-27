@@ -151,6 +151,10 @@ $(document).ready(function(){
                     down();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
                     left();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
                     right();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                    upLeft();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                    upRight();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                    downLeft();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+                    downRight();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
                 }else if(movingPiece == 'Queen'){
                     until(up); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
                     until(down); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
@@ -162,7 +166,7 @@ $(document).ready(function(){
                     until(downRight);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
                 }else if(movingPiece == 'Pawn'){
                     up();
-                    if((playerMoving==1 && row==6) || (playerMoving==2 && row==3)){
+                    if((playerMoving==1 && row==6 && occupied==false) || (playerMoving==2 && row==3 && occupied==false)){
                         up();
                     }
                     row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
@@ -316,7 +320,9 @@ $(document).ready(function(){
             }else{      //occupied by opposite piece ?
                 
                 occupied = true;
-                $('#'+row+column+'').css("background-color", "yellow");
+                if(movingPiece != 'Pawn'){
+                    $('#'+row+column+'').css("background-color", "yellow");
+                }else{}
                 //occupied = true;
             }
 
