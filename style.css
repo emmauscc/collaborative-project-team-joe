@@ -12,6 +12,32 @@ body{
     color: #C2B2B4;
 }
 
+.b2 {
+    background-color: #6B4E71;
+    color: #C2B2B4;
+}
+
+
+.placeholder {
+    height: 100px;
+    width: 25px;
+    background-color: #53687E;
+    float: left;
+}
+
+button {
+    height: 100px;
+    width: 150px;
+    background-color: #C2B2B4;
+    color:#6B4E71;
+    float: left;
+    font-family: "Monaco", monospace;
+    text-align: center;
+    font-size: 25px;
+    border-width: 0px;
+    
+}
+
 
 .container{
     height: 1080px;
@@ -102,10 +128,11 @@ body{
     height: 100px;
     width: 400px;
     background-color: #53687E;
+    color: #C2B2B4;
     float: left;
     font-family: "Monaco", monospace;
     text-align: center;
-    font-size: 70px;
+    font-size: 75px;
 }
 
 .board{

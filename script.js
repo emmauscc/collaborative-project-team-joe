@@ -3,7 +3,7 @@ $(document).ready(function(){
     let column = 1;
     let movingToColumn = 1;
     let movingToRow = 1;
-    let colour = 'squareBrown';
+    //let colour = 'squareBrown';
     let movingPiece = '';
     let first = true
     let playerMoving;
@@ -13,6 +13,131 @@ $(document).ready(function(){
     let player1Grave = [];
     let player2Grave = [];
     let pieceTakenType = '';
+    let turn = 0;
+    var timerId;
+    let timeLeft = 30;
+
+    let r;
+    let c;
+
+    function countdown(player){
+
+        timerId = setTimeout(function(){ countdown(player) }, 1000);
+    
+        if (timeLeft == -1) {
+
+            if (player == 1){
+                endP1();
+            } else if(player == 2){
+                endP2();
+            } 
+
+        } else {
+            $('#t'+player).html("");
+            $('#t'+player).html(timeLeft + ' sec');
+            timeLeft--;
+        }
+        
+    }
+    
+    function check(){
+
+        var checkTimer = setTimeout(function(){ check() }, 50);
+
+        console.log("Turn "+turn);
+
+        if (r == 8 && c == 8) {
+
+            clearTimeout(checkTimer);
+            console.log("finished");
+            
+        } else {
+            input = r.toString()+c.toString();
+            console.log(input);
+            pieceF(null, input);
+
+            if (c == 8){
+                r = r+1;
+                c = 1;
+            } else {
+                c = c+1;
+            }
+
+        }
+
+        
+    }
+
+    function initButtons(){
+        $('#end1').prop('disabled', true);
+        $('#end1').css('background-color', '#53687E');
+        $('#end1').css('color', '#53687E');
+        $('#start2').prop('disabled', true);
+        $('#start2').css('background-color', '#53687E');
+        $('#start2').css('color', '#53687E');
+        $('#end2').prop('disabled', true);
+        $('#end2').css('background-color', '#53687E');
+        $('#end2').css('color', '#53687E');
+    }
+
+    function endP1() {
+        clearTimeout(timerId);
+        $('#t1').html("");
+        timeLeft = 30;
+        //$('#end1').prop('disabled', true);
+        //$('#end1').css('background-color', '#53687E');
+        //$('#end1').css('color', '#53687E');
+        turn = 2;
+        //$('#end2').prop('disabled', false);
+        //$('#end2').css('background-color', '#6B4E71');
+        //$('#end2').css('color', '#C2B2B4');
+        countdown(2);
+    }
+
+    function endP2() {
+        clearTimeout(timerId);
+        $('#t2').html("");
+        timeLeft = 30;
+        //$('#end2').prop('disabled', true);
+        //$('#end2').css('background-color', '#53687E');
+        //$('#end2').css('color', '#53687E');
+        turn = 1;
+        //$('#end1').prop('disabled', false);
+        //$('#end1').css('background-color', '#C2B2B4');
+        //$('#end1').css('color', '#6B4E71');
+        countdown(1);
+        
+    }
+
+    initButtons();
+
+    $("#start1").click(function(){
+       
+        //r = 1;
+        //c = 1;
+        //check();
+        $('#start1').prop('disabled', true);
+        $('#start1').css('background-color', '#53687E');
+        $('#start1').css('color', '#53687E');
+        turn = 1;
+        //$('#end1').prop('disabled', false);
+        //$('#end1').css('background-color', '#C2B2B4');
+        //$('#end1').css('color', '#6B4E71');
+        countdown(1);
+
+    });
+
+    /*
+    $("#end1").click(function(){
+        endP1();
+    });
+
+    $("#end2").click(function(){
+        endP2();
+    });
+    */
+
+
 
     class square{
         constructor(number, piece) {
@@ -62,15 +187,7 @@ $(document).ready(function(){
             }
         }
 
-        
-        for(var i=1; i<5; i++){
-            row = board[i];
-            piece=null;
-            for(var j=1; j<9; j++){
-                row.push(new square(j, piece));
-            }
-        }
-        
+        console.log(board);
 
     }
 
@@ -86,94 +203,67 @@ $(document).ready(function(){
             }
         }
 
-        $('.squareBrown, .squareWhite').click(function piece(){
-            
-            if(first != true){
-                $('.board').html("<div class='smallBanner'></div>");
-                $('#GY1').html("<div id='p1' class='subtitle'>Graveyard</div>");
-                $('#GY2').html("<div id='p2' class='subtitle'>Graveyard</div>");
-    
-                buildDisplayBoard();
-                displayPieces();
-    
-                if($(this).css('background-color')=='yellow'){
-                    movingToRow = parseFloat($(this).attr('id').charAt(0));
-                    movingToColumn = parseFloat($(this).attr('id').charAt(1));
-                    movePiece();
-                }else{
-                }
-            }else{}
-
+        $('.squareBrown, .squareWhite').click(function(){
+            console.log(this);
             id = $(this).attr('id');
-            row = parseFloat(id.charAt(0));
-            storedRow = parseFloat(id.charAt(0));
-            column = parseFloat(id.charAt(1));
-            storedColumn = parseFloat(id.charAt(1));
-            if(board[row][column]['piece'] != null){
-                movingPiece = board[row][column]['piece']['type'];
-                playerMoving = board[row][column]['piece']['playerNo'];
-                pieceNumber = board[row][column]['piece']['number'];
-                colour = $(this).attr('class');
-            }else{
-                movingPiece = null;
-                colour = null;
+            console.log(id);
+            pieceF(this, id);
+        });
+
+    }
+
+    function pieceF(ELEMENT, ID){
+
+        console.log("Running piece F with element "+ELEMENT+" and id "+ID);
+            
+        if(first != true){
+            $('.board').html("<div class='smallBanner'></div>");
+            $('#GY1').html("<div id='p1' class='subtitle'>Graveyard</div>");
+            $('#GY2').html("<div id='p2' class='subtitle'>Graveyard</div>");
+
+            buildDisplayBoard();
+            displayPieces();
+
+            if (ELEMENT != null){
+
+                if($(ELEMENT).css('background-color')=='yellow'){
+                    movingToRow = parseFloat(ID.charAt(0));
+                    movingToColumn = parseFloat(ID.charAt(1));
+                    movePiece();
+                }
+
             }
-            console.log("row: "+row+"; column: "+column+" piece: "+movingPiece);
-            
-            
-            if($(this).css('background-color')!='yellow'){
+
+        }
+
+        id = ID;
+        console.log(id);
+        row = parseFloat(id.charAt(0));
+        storedRow = parseFloat(id.charAt(0));
+        column = parseFloat(id.charAt(1));
+        storedColumn = parseFloat(id.charAt(1));
+        if(board[row][column]['piece'] != null){
+            movingPiece = board[row][column]['piece']['type'];
+            playerMoving = board[row][column]['piece']['playerNo'];
+            pieceNumber = board[row][column]['piece']['number'];
+        }else{
+            movingPiece = null;
+        }
+        console.log("row: "+row+"; column: "+column+" piece: "+movingPiece);
+
+        if (playerMoving == turn){
+
+            if($(ELEMENT).css('background-color')!='yellow'){
                 showAvailableMoves();
             }
-            
-            function showAvailableMoves() {
-                console.log(movingPiece);
-                if(movingPiece == 'Rook'){    
-                    until(up);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    until(down);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    until(left);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    until(right);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                }else if(movingPiece == 'Knight'){
-                    up2Left();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    up2Right();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    down2Left();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    down2Right();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    left2Up();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    left2Down();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    right2Up();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    right2Down();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                }else if(movingPiece == 'Bishop'){
-                    until(upRight); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    until(upLeft);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    until(downRight);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    until(downRight);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                }else if(movingPiece == 'King'){
-                    up();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    down();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    left();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    right();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                }else if(movingPiece == 'Queen'){
-                    until(up); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    until(down); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    until(left); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    until(right);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    until(upLeft); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    until(upRight); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    until(downLeft); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    until(downRight);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                }else if(movingPiece == 'Pawn'){
-                    up();
-                    if((playerMoving==1 && row==6) || (playerMoving==2 && row==3)){
-                        up();
-                    }
-                    row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
-                    checkForTake();
-                    // make an if statement for if the piece is in their original position they can move twice. 
-                }
-            }
-            
-            first = false;
-    
-        });
+
+        } 
+
+        if (turn == 0){
+            showAvailableMoves();
+        }
+        
+        first = false;
 
         function movePiece() {
             class piece{
@@ -199,8 +289,6 @@ $(document).ready(function(){
                 }
                 console.log(player1Grave);
                 console.log(player2Grave);
-
-                
             }
             board[movingToRow][movingToColumn]['piece'] = new piece(playerMoving, movingPiece, pieceNumber);
             console.log(board);
@@ -208,21 +296,75 @@ $(document).ready(function(){
             $('#GY1').html("<div id='p1' class='subtitle'>Graveyard</div>");
             $('#GY2').html("<div id='p2' class='subtitle'>Graveyard</div>");
             $('.board').html("<div class='smallBanner'></div>");
-
+    
             buildDisplayBoard();
             displayPieces();
             
+            if (playerMoving == 1){
+                endP1();
+            } else if (playerMoving == 2){
+                endP2();
+            } else {
+                console.log("ERROR!!!")
+            }
+    
             if(pieceTakenType == 'King'){
                 alert("Player "+playerMoving+" has WON!");
                 location.reload();
             }else if(pieceTakenType == null){}
         
+        };
+
+    };
+
+    
+
+    function showAvailableMoves() {
+        console.log("Showing moves for "+movingPiece);
+        console.log(movingPiece);
+        if(movingPiece == 'Rook'){    
+            until(up);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            until(down);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            until(left);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            until(right);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+        }else if(movingPiece == 'Knight'){
+            up2Left();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            up2Right();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            down2Left();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            down2Right();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            left2Up();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            left2Down();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            right2Up();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            right2Down();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+        }else if(movingPiece == 'Bishop'){
+            until(upRight); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            until(upLeft);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            until(downRight);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            until(downRight);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+        }else if(movingPiece == 'King'){
+            up();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            down();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            left();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            right();row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+        }else if(movingPiece == 'Queen'){
+            until(up); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            until(down); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            until(left); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            until(right);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            until(upLeft); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            until(upRight); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            until(downLeft); row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            until(downRight);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+        }else if(movingPiece == 'Pawn'){
+            up();
+            if((playerMoving==1 && row==6) || (playerMoving==2 && row==3)){
+                up();
+            }
+            row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
+            checkForTake();
+            // make an if statement for if the piece is in their original position they can move twice. 
         }
-
     }
-
-    
-    
 
     function origPieces(){
 
@@ -239,8 +381,6 @@ $(document).ready(function(){
                 }
             }
         }
-
-        origPos = board;
 
     }
 
@@ -271,9 +411,6 @@ $(document).ready(function(){
     //initialiseBoard()
     console.log(board);
 
-   
-    
-    
     //bishop running until - moves diagonally until the square is occupied and can't move any further
     function until(move) {
         //move is a function being passed through until function
