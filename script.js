@@ -62,16 +62,6 @@ $(document).ready(function(){
             }
         }
 
-        
-        for(var i=1; i<5; i++){
-            row = board[i];
-            piece=null;
-            for(var j=1; j<9; j++){
-                row.push(new square(j, piece));
-            }
-        }
-        
-
     }
 
     function buildDisplayBoard(){
@@ -120,13 +110,11 @@ $(document).ready(function(){
             }
             console.log("row: "+row+"; column: "+column+" piece: "+movingPiece);
             
-            
             if($(this).css('background-color')!='yellow'){
                 showAvailableMoves();
             }
             
             function showAvailableMoves() {
-                console.log(movingPiece);
                 if(movingPiece == 'Rook'){    
                     until(up);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
                     until(down);row = parseFloat(id.charAt(0));column = parseFloat(id.charAt(1));
@@ -187,9 +175,7 @@ $(document).ready(function(){
                   this.number = number;
                 }       
             }
-            console.log(" previous row: "+storedRow+" previous column: "+storedColumn);
-            console.log("Piece type: "+movingPiece+" Piece number: "+pieceNumber+" Player Moving: "+playerMoving);
-            console.log("moving to this row: "+movingToRow+" and moving to this column: "+movingToColumn);
+            
             board[storedRow][storedColumn]['piece'] = null;
             let pieceTaken = board[movingToRow][movingToColumn]['piece'];
             if(pieceTaken == null){
@@ -201,13 +187,9 @@ $(document).ready(function(){
                 }else if(playerMoving == 2){
                     player1Grave.push(pieceTakenType);
                 }
-                console.log(player1Grave);
-                console.log(player2Grave);
-
                 
             }
             board[movingToRow][movingToColumn]['piece'] = new piece(playerMoving, movingPiece, pieceNumber);
-            console.log(board);
             $('.board').html("<div class='smallBanner'></div>");
             $('#GY1').html("<div id='p1' class='subtitle'>Graveyard</div>");
             $('#GY2').html("<div id='p2' class='subtitle'>Graveyard</div>");
@@ -296,7 +278,7 @@ $(document).ready(function(){
         }
     }
 
-    function up(){ //currently running 3 times before it doesn't run anymore but the whole ting turns into an infinite loop
+    function up(){ 
         
         if(playerMoving == 2){
             row = row+1;
@@ -311,19 +293,17 @@ $(document).ready(function(){
                 occupiedBy = 'empty';
             }
             
-            if(occupiedBy == playerMoving){ //occupied by own piece
+            if(occupiedBy == playerMoving){ //occupied by own player
                 occupied = true;
-            }else if(occupiedBy == 'empty'){ //no piece on the empty grid
+            }else if(occupiedBy == 'empty'){ //no piece in the square
                 $('#'+row+column+'').css("background-color", "yellow");
                 occupied = false; 
                 
-            }else{      //occupied by opposite piece ?
-                
+            }else{  //occupied by opposite player
                 occupied = true;
                 if(movingPiece != 'Pawn'){
                     $('#'+row+column+'').css("background-color", "yellow");
                 }else{}
-                //occupied = true;
             }
 
         }else{
